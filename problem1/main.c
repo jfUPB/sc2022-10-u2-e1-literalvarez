@@ -34,14 +34,54 @@ void printArray(struct array *parr)
     printf("\n");
 }
 
-void getArray(struct array *parr)
+void getArray(struct array* parr)
 {
-    
-}
 
-void arrayCommon(struct array *arrIn1, struct array *arrIn2, struct array *arrOut)
+    int SizeAr;
+    scanf("%d", &SizeAr);
+    parr->size = SizeAr;
+
+    int array[SizeAr];
+    parr->pdata = malloc(sizeof(int) * parr->size);
+
+    for (int i = 0; i < SizeAr; i++)
+    {
+        scanf("%d", &array[i]);
+        parr->pdata[i] = array[i];
+    }
+}
+void arrayCommon(struct array* arrIn1, struct array* arrIn2, struct array* arrOut)
 {
-    
+    arrOut->pdata = malloc(30);
+
+    int Pos = 0;
+    int isRepeated = 0;
+
+    for (int ar1 = 0; ar1 < arrIn1->size; ar1++)
+    {
+        for (int ar2 = 0; ar2 < arrIn2->size; ar2++)
+        {
+            if (*(arrIn1->pdata + ar1) == *(arrIn2->pdata + ar2))
+            {
+                for (int i = 0; i < Pos; i++)
+                {
+                    if (*(arrOut->pdata + i) == *(arrIn1->pdata + ar1))
+                    {
+                        isRepeated = 1;
+                    }
+                }
+                if (isRepeated != 1)
+                {
+                    *(arrOut->pdata + Pos) = *(arrIn1->pdata + ar1);
+                    Pos++;
+                }
+                isRepeated = 0;
+            }
+        }
+    }
+
+    arrOut->size = Pos;
+
 }
 
 void freeMemory(struct array *arr1, struct array *arr2, struct array *arr3)
